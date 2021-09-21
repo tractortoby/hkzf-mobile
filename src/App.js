@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 
 // 导入路由组件
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
