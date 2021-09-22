@@ -17,7 +17,7 @@ const tabItems = [
   {
     title: '首页',
     icon: 'icon-ind',
-    path: '/home/index'
+    path: '/home'
   },
   {
     title: '找房',
@@ -65,7 +65,7 @@ export default class Home extends React.Component {
       <div className="home">
         {/* 渲染子路由News */}
         <Route path="/home/news" component={News} />
-        <Route path="/home/index" component={Index} />
+        <Route exact path="/home" component={Index} />
         <Route path="/home/list" component={HouseList} />
         <Route path="/home/profile" component={Profile} />
         {/* TabBar */}
