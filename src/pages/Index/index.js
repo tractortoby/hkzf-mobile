@@ -1,19 +1,50 @@
 import React from "react";
 import { Carousel } from 'antd-mobile';
+import axios from "axios";
 
 
 export default class Index extends React.Component {
   state = {
-    data: ['1', '2', '3']
+    // 轮播图状态数据
+    swipers: []
   }
+
+  // 获取轮播图数据的方法
+  async getSwipers() {
+    const res = await axios.get('http://localhost:8080/home/swiper')
+    this.setState(() => {
+      return {
+        swipers: res.data.body
+      }
+    })
+  }
+
   componentDidMount() {
-    // simulate img loading
-    setTimeout(() => {
-      this.setState({
-        data: ['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI'],
-      });
-    }, 100);
+    this.getSwipers()
   }
+
+  // 渲染轮播图结构
+  renderSwipers() {
+    return (this.state.swipers.map(item => (
+      <a
+        key={item.id}
+        href="http://www.tobychung.com"
+        style={{ display: 'inline-block', width: '100%', height: 212 }}
+      >
+        <img
+          src={`http://localhost:8080${item.imgSrc}`}
+          alt=""
+          style={{ width: '100%', verticalAlign: 'top' }}
+          onLoad={() => {
+            // fire window resize event to change height
+            window.dispatchEvent(new Event('resize'));
+            this.setState({ imgHeight: 'auto' });
+          }}
+        />
+      </a>
+    )))
+  }
+
   render() {
     return (
       <div className="index">
@@ -22,24 +53,7 @@ export default class Index extends React.Component {
           infinite
           autoplayInterval={5000}
         >
-          {this.state.data.map(val => (
-            <a
-              key={val}
-              href="http://www.tobychung.com"
-              style={{ display: 'inline-block', width: '100%', height: 212 }}
-            >
-              <img
-                src={`https://zos.alipayobjects.com/rmsportal/${val}.png`}
-                alt=""
-                style={{ width: '100%', verticalAlign: 'top' }}
-                onLoad={() => {
-                  // fire window resize event to change height
-                  window.dispatchEvent(new Event('resize'));
-                  this.setState({ imgHeight: 'auto' });
-                }}
-              />
-            </a>
-          ))}
+          {this.renderSwipers()}
         </Carousel>
       </div>
     );
