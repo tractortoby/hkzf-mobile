@@ -36,10 +36,21 @@ const tabItems = [
   }
 ]
 
+
+
 export default class Home extends React.Component {
   state = {
     selectedTab: this.props.location.pathname
   };
+
+  // 解决导航菜单地址切换菜单不高亮问题
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      this.setState({
+        selectedTab: this.props.location.pathname
+      })
+    }
+  }
 
   // 渲染TabBar.Item
   renderTabBarItem() {
