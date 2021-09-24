@@ -43,6 +43,11 @@ const navs = [
   }
 ]
 
+// 获取地理位置信息
+navigator.geolocation.getCurrentPosition(position => {
+  console.log('当前位置信息：', position)
+})
+
 export default class Index extends React.Component {
   state = {
     // 轮播图状态数据
